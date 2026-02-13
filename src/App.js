@@ -16,10 +16,17 @@ const PUBS = [
     status: "accepted",
     authors: ["A. T. Issah", "C. P. Mukamakuza"],
     title: "Bridging the Gap in Malaria Diagnostics: An Attention-Centric YOLO Framework with Species-Specific Augmentation for Tiny Parasite Detection in Low-Resource Settings",
-    venue: "AIMedHealth Bridge Workshop, AAAI 2026",
+    venue: "AIMedHealth Bridge, AAAI 2026",
     location: "Singapore",
     date: "2026",
-    links: [],
+    links: [
+      { label: "Paper", href: "https://openreview.net/forum?id=miC6JHIQPg", icon: "\u{1F4C4}" },
+      // { label: "arXiv", href: "#", icon: <img src="https://cdn.simpleicons.org/arxiv" alt="" style={{ width: 14, height: 14 }} /> },
+      // { label: "arXiv", href: "#", icon: <img src="https://arxiv.org/favicon.ico" alt="" style={{ width: 14, height: 14 }} /> },
+      // { label: "arXiv", href: "#", icon: <img src="https://cdn.simpleicons.org/arxiv/2563eb" alt="" style={{ width: 14, height: 14 }} /> },
+      // { label: "Code", href: "#", icon: "\u{1F4BB}" },
+      // { label: "Slides", href: "#", icon: "\u{1F4CA}" },
+    ],
   },
   {
     status: "accepted",
@@ -28,7 +35,10 @@ const PUBS = [
     venue: "IEEE AFRICON 2025",
     location: "Polokwane, South Africa",
     date: "2025",
-    links: [],
+    links: [
+      { label: "Paper", href: "#", icon: "\u{1F4C4}" },
+      { label: "arXiv", href: "#", icon: <img src="https://cdn.simpleicons.org/arxiv" alt="" style={{ width: 14, height: 14 }} /> },
+    ],
   },
   {
     status: "accepted",
@@ -37,7 +47,10 @@ const PUBS = [
     venue: "MIRASOL Workshop, MICCAI 2025",
     location: "Daejeon, South Korea",
     date: "2025",
-    links: [],
+    links: [
+      // { label: "Paper", href: "#", icon: "\u{1F4C4}" },
+      { label: "arXiv", href: "https://arxiv.org/abs/2601.16967", icon: <img src="https://cdn.simpleicons.org/arxiv" alt="" style={{ width: 14, height: 14 }} /> },
+    ],
   },
   // {
   //   status: "review",
@@ -45,7 +58,9 @@ const PUBS = [
   //   title: "Detection versus Instance Segmentation for Multi-Species Malaria Diagnosis: A Head-to-Head Comparison and Multi-Dataset Validation of YOLOv12 Architectures with Small Object Optimization",
   //   venue: "MIDL 2026",
   //   date: "2026",
-  //   links: [],
+  //   links: [
+  //     { label: "Preprint", href: "#", icon: "\u{1F4DD}" },
+  //   ],
   //   note: "Under review",
   // },
   // {
@@ -237,7 +252,7 @@ function About() {
               I am a Graduate Research Associate at Carnegie Mellon University Africa, where I completed my M.S. in Engineering Artificial Intelligence (CQPA: 3.64/4.00) in May 2025. I also hold a B.S. in Computer Science from the University for Development Studies (CGPA: 4.43/5.00).
             </p>
             <p style={{ margin: "0 0 16px" }}>
-              My research interests lie at the intersection of <strong style={{ color: TEXT, fontWeight: 600 }}>machine learning and medical imaging</strong>. I develop and apply computer vision and deep learning techniques to complex, high-dimensional medical data — including MRI, ultrasound, and microscopy — to build robust and interpretable diagnostic tools.
+              My research interests lie at the intersection of <strong style={{ color: TEXT, fontWeight: 600 }}>machine learning and medical imaging</strong>. I develop and apply computer vision and deep learning techniques to complex, high-dimensional medical data {"\u2014"} including MRI, ultrasound, and microscopy {"\u2014"} to build robust and interpretable diagnostic tools.
             </p>
             <p style={{ margin: 0 }}>
               I am particularly drawn to research that bridges advances in AI with practical clinical application, with an emphasis on <strong style={{ color: TEXT, fontWeight: 600 }}>solutions that scale to low-resource healthcare environments</strong>. I am currently applying to PhD programs for Fall 2026.
@@ -302,14 +317,24 @@ function PubItem({ pub, idx }) {
           <p style={{
             fontSize: 13.5, color: TEXT_SEC, margin: 0, fontStyle: "italic",
           }}>
-            {pub.venue}{pub.location ? ` · ${pub.location}` : ""}
+            {pub.venue}{pub.location ? ` \u00B7 ${pub.location}` : ""}
           </p>
         )}
         {pub.links && pub.links.length > 0 && (
-          <div style={{ display: "flex", gap: 12, marginTop: 8 }}>
+          <div style={{ display: "flex", gap: 8, marginTop: 10, flexWrap: "wrap" }}>
             {pub.links.map((l, i) => (
-              <a key={i} href={l.href} style={{ fontSize: 13, color: ACCENT, textDecoration: "none", fontWeight: 500 }}>
-                [{l.label}]
+              <a key={i} href={l.href} target="_blank" rel="noreferrer" style={{
+                display: "inline-flex", alignItems: "center", gap: 5,
+                fontSize: 12.5, fontWeight: 500, color: ACCENT,
+                textDecoration: "none", padding: "4px 12px", borderRadius: 5,
+                border: `1px solid ${ACCENT}30`, background: `${ACCENT}06`,
+                transition: "all 0.2s", lineHeight: 1,
+              }}
+                onMouseEnter={e => { e.currentTarget.style.background = ACCENT; e.currentTarget.style.color = "#fff"; e.currentTarget.style.borderColor = ACCENT; }}
+                onMouseLeave={e => { e.currentTarget.style.background = `${ACCENT}06`; e.currentTarget.style.color = ACCENT; e.currentTarget.style.borderColor = `${ACCENT}30`; }}
+              >
+                <span style={{ fontSize: 13 }}>{l.icon}</span>
+                {l.label}
               </a>
             ))}
           </div>
@@ -329,7 +354,7 @@ function Publications() {
         <SectionHead>Publications</SectionHead>
         <Fade>
           <p style={{ fontSize: 14, color: TEXT_TERT, marginBottom: 24 }}>
-            {PUBS.length} total &nbsp;·&nbsp; {accepted.length} published &nbsp;·&nbsp; {review.length} under review &nbsp;·&nbsp; {prep.length} in preparation
+            {PUBS.length} total {"\u00B7"} {accepted.length} published {"\u00B7"} {review.length} under review {"\u00B7"} {prep.length} in preparation
           </p>
         </Fade>
 
@@ -386,17 +411,17 @@ function Research() {
             <h3 style={{ fontSize: 16, fontWeight: 600, color: TEXT, margin: "0 0 20px" }}>Selected Experience</h3>
             {[
               {
-                role: "Lead Researcher — Malaria Parasite Detection & Classification",
+                role: "Lead Researcher \u2014 Malaria Parasite Detection & Classification",
                 org: "Carnegie Mellon University",
                 detail: "Led end-to-end CV project across 7,000+ blood smear images; benchmarked YOLOv12, YOLOv8, Mask R-CNN, and Faster R-CNN achieving 87.8% mAP@50.",
               },
               {
-                role: "Co-first Author — AI-Powered Medical Equipment Platform",
+                role: "Co-first Author \u2014 AI-Powered Medical Equipment Platform",
                 org: "Carnegie Mellon University",
                 detail: "Developed an LLM-integrated diagnostic platform for real-time medical device repair support in LMICs. Presented at MICCAI 2025.",
               },
               {
-                role: "Lead Researcher — KG-Driven Crop Advisory Platform",
+                role: "Lead Researcher \u2014 KG-Driven Crop Advisory Platform",
                 org: "Carnegie Mellon University & KCRC",
                 detail: "Architecting a multi-agent advisory system combining iterative KG refinement with GraphRAG for smallholder farmers in Rwanda.",
               },
@@ -427,8 +452,8 @@ function Teaching() {
           </p>
         </Fade>
         {[
-          { course: "Introduction to Deep Learning (11-785)", period: "January 2025 — Present" },
-          { course: "Data Inference & Applied Machine Learning", period: "September — December 2024" },
+          { course: "Introduction to Deep Learning (11-785)", period: "January 2025 \u2013 Present" },
+          { course: "Data Inference & Applied Machine Learning", period: "September \u2013 December 2024" },
         ].map((t, i) => (
           <Fade key={i} delay={i * 0.08}>
             <div style={{
@@ -471,10 +496,10 @@ function Contact() {
             </p>
             <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
               {[
-                { icon: "✉", label: "aissah@andrew.cmu.edu", href: "mailto:aissah@andrew.cmu.edu" },
-                { icon: "🔗", label: "LinkedIn Profile", href: "https://linkedin.com/in/YOUR-PROFILE" },
-                { icon: "📚", label: "Google Scholar", href: "https://scholar.google.com/citations?user=YOUR_ID" },
-                { icon: "💻", label: "GitHub", href: "https://github.com/YOUR-USERNAME" },
+                { icon: "\u2709", label: "aissah@andrew.cmu.edu", href: "mailto:aissah@andrew.cmu.edu" },
+                { icon: "\u{1F517}", label: "LinkedIn Profile", href: "https://linkedin.com/in/ahmed-tahiru-issah-18b8671a2" },
+                { icon: "\u{1F4DA}", label: "Google Scholar", href: "https://scholar.google.com/citations?user=E2zJqAoAAAAJ" },
+                { icon: "\u{1F4BB}", label: "GitHub", href: "https://github.com/ahmedinhotahiru" },
               ].map((c, i) => (
                 <a key={i} href={c.href} target={c.href.startsWith("mailto") ? undefined : "_blank"} rel="noreferrer" style={{
                   display: "flex", alignItems: "center", gap: 12, textDecoration: "none",
@@ -502,7 +527,7 @@ function Footer() {
       borderTop: `1px solid ${BORDER}`, background: BG_SEC,
     }}>
       <p style={{ margin: 0, fontSize: 13, color: TEXT_TERT }}>
-        © {new Date().getFullYear()} Ahmed Tahiru Issah
+        {"\u00A9"} {new Date().getFullYear()} Ahmed Tahiru Issah
       </p>
     </footer>
   );
