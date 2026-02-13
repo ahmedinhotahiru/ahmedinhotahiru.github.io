@@ -413,7 +413,7 @@ function Research() {
               {
                 role: "Lead Researcher \u2014 Malaria Parasite Detection & Classification",
                 org: "Carnegie Mellon University",
-                detail: "Led end-to-end CV project across 7,000+ blood smear images; benchmarked YOLOv12, YOLOv8, Mask R-CNN, and Faster R-CNN achieving 87.8% mAP@50.",
+                detail: "Led end-to-end CV project across 7,000+ blood smear images for automated malaria detection; benchmarked models including YOLOv12, YOLOv8, Mask R-CNN, and Faster R-CNN.",
               },
               {
                 role: "Co-first Author \u2014 AI-Powered Medical Equipment Platform",
