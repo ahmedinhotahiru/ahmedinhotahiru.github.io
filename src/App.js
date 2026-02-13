@@ -196,7 +196,7 @@ function Hero() {
             margin: "0 0 8px", lineHeight: 1.2,
           }}>Ahmed Tahiru Issah</h1>
           <p style={{ fontSize: 16, color: TEXT_SEC, margin: "0 0 6px", lineHeight: 1.5 }}>
-            Graduate Research Associate & Teaching Assistant
+            Research Associate, AI Healthcare Research Laboratory
           </p>
           <p style={{ fontSize: 15, color: TEXT_TERT, margin: "0 0 20px" }}>
             Carnegie Mellon University Africa
@@ -249,7 +249,7 @@ function About() {
         <Fade>
           <div style={{ fontSize: 15, color: TEXT_SEC, lineHeight: 1.85, maxWidth: 680 }}>
             <p style={{ margin: "0 0 16px" }}>
-              I am a Graduate Research Associate at Carnegie Mellon University Africa, where I completed my M.S. in Engineering Artificial Intelligence (CQPA: 3.64/4.00) in May 2025. I also hold a B.S. in Computer Science from the University for Development Studies (CGPA: 4.43/5.00).
+              I am a Research Associate in the AI Healthcare Research Laboratory at Carnegie Mellon University Africa, where I completed my Master of Science in Engineering Artificial Intelligence (CQPA: 3.64/4.00) in May 2025. I also hold a Bachelor of Science in Computer Science from the University for Development Studies (CGPA: 4.43/5.00).
             </p>
             <p style={{ margin: "0 0 16px" }}>
               My research interests lie at the intersection of <strong style={{ color: TEXT, fontWeight: 600 }}>artificial intelligence and healthcare, with a focus on medical imaging</strong>. I develop and apply computer vision and deep learning techniques to complex, high-dimensional medical data, to build robust and interpretable diagnostic tools.
