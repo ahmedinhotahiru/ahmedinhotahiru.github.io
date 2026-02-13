@@ -199,7 +199,7 @@ function Hero() {
             Research Associate, AI Healthcare Research Laboratory
           </p>
           <p style={{ fontSize: 15, color: TEXT_TERT, margin: "0 0 20px" }}>
-            Carnegie Mellon University Africa
+            Carnegie Mellon University
           </p>
           <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
             {[
