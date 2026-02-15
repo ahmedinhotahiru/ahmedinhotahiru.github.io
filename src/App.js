@@ -9,7 +9,7 @@ const BG = "#ffffff";
 const BG_SEC = "#f8fafc";
 const BORDER = "#e2e8f0";
 
-const SECTIONS = ["About", "Publications", "Research", "Teaching", "Contact"];
+const SECTIONS = ["About", "Publications", "Research", "News", "Teaching", "Contact"];
 
 const PUBS = [
   {
@@ -22,8 +22,6 @@ const PUBS = [
     links: [
       { label: "Paper", href: "https://openreview.net/forum?id=miC6JHIQPg", icon: "\u{1F4C4}" },
       // { label: "arXiv", href: "#", icon: <img src="https://cdn.simpleicons.org/arxiv" alt="" style={{ width: 14, height: 14 }} /> },
-      // { label: "arXiv", href: "#", icon: <img src="https://arxiv.org/favicon.ico" alt="" style={{ width: 14, height: 14 }} /> },
-      // { label: "arXiv", href: "#", icon: <img src="https://cdn.simpleicons.org/arxiv/2563eb" alt="" style={{ width: 14, height: 14 }} /> },
       // { label: "Code", href: "#", icon: "\u{1F4BB}" },
       // { label: "Slides", href: "#", icon: "\u{1F4CA}" },
     ],
@@ -48,7 +46,6 @@ const PUBS = [
     location: "Daejeon, South Korea",
     date: "2025",
     links: [
-      // { label: "Paper", href: "#", icon: "\u{1F4C4}" },
       { label: "arXiv", href: "https://arxiv.org/abs/2601.16967", icon: <img src="https://cdn.simpleicons.org/arxiv" alt="" style={{ width: 14, height: 14 }} /> },
     ],
   },
@@ -79,6 +76,15 @@ const PUBS = [
   //   date: "",
   //   links: [],
   // },
+];
+
+const NEWS = [
+  { date: "Mar 2026", text: "Paper accepted at MIDL 2026, Validation Studies Track.", latest: true },
+  { date: "Jan 2026", text: "Paper accepted and presented at AIMedHealth Bridge, AAAI 2026 in Singapore." },
+  { date: "Dec 2025", text: "Paper accepted and presented at IEEE AFRICON 2025 in Polokwane, South Africa." },
+  { date: "Sep 2025", text: "Presented co-first-authored paper at MIRASOL Workshop, MICCAI 2025 in Daejeon, South Korea." },
+  { date: "May 2025", text: "Completed M.S. in Engineering Artificial Intelligence at Carnegie Mellon University." },
+  { date: "Jan 2025", text: "Started as Graduate Teaching Assistant for Introduction to Deep Learning (11-785)." },
 ];
 
 const RESEARCH = [
@@ -113,6 +119,17 @@ function useVisible(threshold = 0.12) {
   return [ref, vis];
 }
 
+function useMobile(bp = 640) {
+  const [m, setM] = useState(false);
+  useEffect(() => {
+    const check = () => setM(window.innerWidth < bp);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, [bp]);
+  return m;
+}
+
 function Fade({ children, delay = 0, style = {} }) {
   const [ref, vis] = useVisible();
   return (
@@ -126,63 +143,95 @@ function Fade({ children, delay = 0, style = {} }) {
 }
 
 function Nav({ active, scrolled }) {
-  const go = (id) => document.getElementById(id.toLowerCase())?.scrollIntoView({ behavior: "smooth" });
+  const [open, setOpen] = useState(false);
+  const mob = useMobile();
+  const go = (id) => {
+    setOpen(false);
+    document.getElementById(id.toLowerCase())?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <nav style={{
       position: "fixed", top: 0, left: 0, right: 0, zIndex: 100,
-      background: scrolled ? "rgba(255,255,255,0.95)" : "transparent",
-      backdropFilter: scrolled ? "blur(12px)" : "none",
-      borderBottom: scrolled ? `1px solid ${BORDER}` : "none",
+      background: scrolled || open ? "rgba(255,255,255,0.97)" : "transparent",
+      backdropFilter: scrolled || open ? "blur(12px)" : "none",
+      borderBottom: scrolled || open ? `1px solid ${BORDER}` : "none",
       transition: "all 0.3s",
     }}>
       <div style={{
         maxWidth: 820, margin: "0 auto", display: "flex", alignItems: "center",
-        justifyContent: "space-between", height: 56, padding: "0 24px",
+        justifyContent: "space-between", height: 56, padding: "0 20px",
       }}>
-        <span onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} style={{
+        <span onClick={() => { window.scrollTo({ top: 0, behavior: "smooth" }); setOpen(false); }} style={{
           cursor: "pointer", fontWeight: 700, fontSize: 16, color: TEXT, letterSpacing: "-0.3px",
         }}>Ahmed T. Issah</span>
-        <div style={{ display: "flex", gap: 4 }}>
+
+        {mob ? (
+          <button onClick={() => setOpen(!open)} aria-label="Menu" style={{
+            background: "none", border: "none", cursor: "pointer", padding: 8,
+            display: "flex", flexDirection: "column", gap: 5, justifyContent: "center",
+          }}>
+            <span style={{ display: "block", width: 22, height: 2, background: TEXT, borderRadius: 1, transition: "all 0.3s", transform: open ? "rotate(45deg) translate(2.5px, 2.5px)" : "none" }} />
+            <span style={{ display: "block", width: 22, height: 2, background: TEXT, borderRadius: 1, transition: "all 0.3s", opacity: open ? 0 : 1 }} />
+            <span style={{ display: "block", width: 22, height: 2, background: TEXT, borderRadius: 1, transition: "all 0.3s", transform: open ? "rotate(-45deg) translate(2.5px, -2.5px)" : "none" }} />
+          </button>
+        ) : (
+          <div style={{ display: "flex", gap: 4 }}>
+            {SECTIONS.map(s => (
+              <button key={s} onClick={() => go(s)} style={{
+                background: "none", border: "none", cursor: "pointer",
+                fontSize: 13.5, fontWeight: active === s.toLowerCase() ? 600 : 400,
+                color: active === s.toLowerCase() ? ACCENT : TEXT_SEC,
+                padding: "6px 12px", borderRadius: 6, transition: "all 0.2s",
+                borderBottom: active === s.toLowerCase() ? `2px solid ${ACCENT}` : "2px solid transparent",
+              }}
+                onMouseEnter={e => e.target.style.color = ACCENT}
+                onMouseLeave={e => e.target.style.color = active === s.toLowerCase() ? ACCENT : TEXT_SEC}
+              >{s}</button>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {mob && open && (
+        <div style={{
+          padding: "8px 20px 16px", display: "flex", flexDirection: "column", gap: 4,
+          background: "rgba(255,255,255,0.97)", borderBottom: `1px solid ${BORDER}`,
+        }}>
           {SECTIONS.map(s => (
             <button key={s} onClick={() => go(s)} style={{
-              background: "none", border: "none", cursor: "pointer",
-              fontSize: 13.5, fontWeight: active === s.toLowerCase() ? 600 : 400,
+              background: "none", border: "none", cursor: "pointer", textAlign: "left",
+              fontSize: 15, fontWeight: active === s.toLowerCase() ? 600 : 400,
               color: active === s.toLowerCase() ? ACCENT : TEXT_SEC,
-              padding: "6px 12px", borderRadius: 6, transition: "all 0.2s",
-              borderBottom: active === s.toLowerCase() ? `2px solid ${ACCENT}` : "2px solid transparent",
-            }}
-              onMouseEnter={e => e.target.style.color = ACCENT}
-              onMouseLeave={e => e.target.style.color = active === s.toLowerCase() ? ACCENT : TEXT_SEC}
-            >{s}</button>
+              padding: "10px 4px", borderRadius: 6,
+            }}>{s}</button>
           ))}
         </div>
-      </div>
+      )}
     </nav>
   );
 }
 
 function Hero() {
+  const mob = useMobile();
   return (
     <section style={{
-      paddingTop: 120, paddingBottom: 80, background: BG,
+      paddingTop: mob ? 90 : 120, paddingBottom: mob ? 48 : 80, background: BG,
     }}>
       <div style={{
-        maxWidth: 820, margin: "0 auto", padding: "0 24px",
-        display: "flex", gap: 48, alignItems: "center", flexWrap: "wrap",
+        maxWidth: 820, margin: "0 auto", padding: mob ? "0 20px" : "0 24px",
+        display: "flex", gap: mob ? 24 : 48, alignItems: mob ? "center" : "center",
+        flexDirection: mob ? "column" : "row", flexWrap: "wrap",
+        textAlign: mob ? "center" : "left",
       }}>
         <Fade>
           <div style={{
-            width: 160, height: 160, borderRadius: "50%",
+            width: mob ? 110 : 160, height: mob ? 110 : 160, borderRadius: "50%",
             background: BG_SEC, border: `2px solid ${BORDER}`,
             display: "flex", alignItems: "center", justifyContent: "center",
             fontSize: 42, color: TEXT_TERT, fontWeight: 600, flexShrink: 0,
             overflow: "hidden",
           }}>
-            {/* Replace with: <img src="your-photo.jpg" style={{width:'100%',height:'100%',objectFit:'cover'}} /> */}
-            {/* <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke={TEXT_TERT} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-              <circle cx="12" cy="7" r="4"/>
-            </svg> */}
             <img
               src={process.env.PUBLIC_URL + '/profile.png'}
               alt="Ahmed Tahiru Issah"
@@ -190,18 +239,18 @@ function Hero() {
             />
           </div>
         </Fade>
-        <Fade delay={0.1} style={{ flex: 1, minWidth: 280 }}>
+        <Fade delay={0.1} style={{ flex: 1, minWidth: 0 }}>
           <h1 style={{
-            fontSize: 32, fontWeight: 700, color: TEXT, letterSpacing: "-0.5px",
+            fontSize: mob ? 26 : 32, fontWeight: 700, color: TEXT, letterSpacing: "-0.5px",
             margin: "0 0 8px", lineHeight: 1.2,
           }}>Ahmed Tahiru Issah</h1>
-          <p style={{ fontSize: 16, color: TEXT_SEC, margin: "0 0 6px", lineHeight: 1.5 }}>
+          <p style={{ fontSize: mob ? 14.5 : 16, color: TEXT_SEC, margin: "0 0 6px", lineHeight: 1.5 }}>
             Research Associate, AI Healthcare Research Laboratory
           </p>
-          <p style={{ fontSize: 15, color: TEXT_TERT, margin: "0 0 20px" }}>
+          <p style={{ fontSize: mob ? 14 : 15, color: TEXT_TERT, margin: "0 0 20px" }}>
             Carnegie Mellon University
           </p>
-          <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+          <div style={{ display: "flex", gap: mob ? 8 : 10, flexWrap: "wrap", justifyContent: mob ? "center" : "flex-start" }}>
             {[
               { label: "Email", href: "mailto:aissah@andrew.cmu.edu" },
               { label: "Google Scholar", href: "https://scholar.google.com/citations?user=E2zJqAoAAAAJ" },
@@ -210,8 +259,8 @@ function Hero() {
               { label: "CV", href: `${process.env.PUBLIC_URL}/cv.pdf` },
             ].map(l => (
               <a key={l.label} href={l.href} target={l.href.startsWith("mailto") ? undefined : "_blank"} rel="noreferrer" style={{
-                fontSize: 13, fontWeight: 500, color: ACCENT, textDecoration: "none",
-                padding: "6px 14px", borderRadius: 6, border: `1px solid ${ACCENT}33`,
+                fontSize: mob ? 12 : 13, fontWeight: 500, color: ACCENT, textDecoration: "none",
+                padding: mob ? "5px 11px" : "6px 14px", borderRadius: 6, border: `1px solid ${ACCENT}33`,
                 background: `${ACCENT}08`, transition: "all 0.2s",
               }}
                 onMouseEnter={e => { e.target.style.background = ACCENT; e.target.style.color = "#fff"; }}
@@ -226,28 +275,30 @@ function Hero() {
 }
 
 function Divider() {
-  return <div style={{ maxWidth: 820, margin: "0 auto", padding: "0 24px" }}><div style={{ borderTop: `1px solid ${BORDER}` }} /></div>;
+  return <div style={{ maxWidth: 820, margin: "0 auto", padding: "0 20px" }}><div style={{ borderTop: `1px solid ${BORDER}` }} /></div>;
 }
 
 function SectionHead({ children, id }) {
+  const mob = useMobile();
   return (
     <Fade>
       <h2 id={id} style={{
-        fontSize: 22, fontWeight: 700, color: TEXT, letterSpacing: "-0.3px",
-        margin: "0 0 8px", paddingTop: 80,
+        fontSize: mob ? 20 : 22, fontWeight: 700, color: TEXT, letterSpacing: "-0.3px",
+        margin: "0 0 8px", paddingTop: mob ? 56 : 80,
       }}>{children}</h2>
-      <div style={{ width: 40, height: 2.5, background: ACCENT, borderRadius: 2, marginBottom: 32 }} />
+      <div style={{ width: 40, height: 2.5, background: ACCENT, borderRadius: 2, marginBottom: mob ? 24 : 32 }} />
     </Fade>
   );
 }
 
 function About() {
+  const mob = useMobile();
   return (
     <section id="about" style={{ background: BG }}>
-      <div style={{ maxWidth: 820, margin: "0 auto", padding: "0 24px 60px" }}>
+      <div style={{ maxWidth: 820, margin: "0 auto", padding: mob ? "0 20px 40px" : "0 24px 60px" }}>
         <SectionHead id="about-heading">About</SectionHead>
         <Fade>
-          <div style={{ fontSize: 15, color: TEXT_SEC, lineHeight: 1.85, maxWidth: 680 }}>
+          <div style={{ fontSize: mob ? 14 : 15, color: TEXT_SEC, lineHeight: 1.85, maxWidth: 680 }}>
             <p style={{ margin: "0 0 16px" }}>
               I am a Research Associate in the AI Healthcare Research Laboratory at Carnegie Mellon University Africa, where I completed my Master of Science in Engineering Artificial Intelligence (CQPA: 3.64/4.00) in May 2025. I also hold a Bachelor of Science in Computer Science from the University for Development Studies (CGPA: 4.43/5.00).
             </p>
@@ -345,12 +396,13 @@ function PubItem({ pub, idx }) {
 }
 
 function Publications() {
+  const mob = useMobile();
   const accepted = PUBS.filter(p => p.status === "accepted");
   const review = PUBS.filter(p => p.status === "review");
   const prep = PUBS.filter(p => p.status === "prep");
   return (
     <section id="publications" style={{ background: BG_SEC }}>
-      <div style={{ maxWidth: 820, margin: "0 auto", padding: "0 24px 60px" }}>
+      <div style={{ maxWidth: 820, margin: "0 auto", padding: mob ? "0 20px 40px" : "0 24px 60px" }}>
         <SectionHead>Publications</SectionHead>
         <Fade>
           <p style={{ fontSize: 14, color: TEXT_TERT, marginBottom: 24 }}>
@@ -384,15 +436,16 @@ function Publications() {
 }
 
 function Research() {
+  const mob = useMobile();
   return (
     <section id="research" style={{ background: BG }}>
-      <div style={{ maxWidth: 820, margin: "0 auto", padding: "0 24px 60px" }}>
+      <div style={{ maxWidth: 820, margin: "0 auto", padding: mob ? "0 20px 40px" : "0 24px 60px" }}>
         <SectionHead>Research</SectionHead>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))", gap: 20 }}>
+        <div style={{ display: "grid", gridTemplateColumns: mob ? "1fr" : "repeat(auto-fill, minmax(340px, 1fr))", gap: mob ? 16 : 20 }}>
           {RESEARCH.map((r, i) => (
             <Fade key={i} delay={i * 0.06}>
               <div style={{
-                padding: "24px 24px", borderRadius: 10,
+                padding: mob ? "20px 20px" : "24px 24px", borderRadius: 10,
                 border: `1px solid ${BORDER}`, background: BG,
                 transition: "box-shadow 0.25s, border-color 0.25s",
               }}
@@ -407,7 +460,7 @@ function Research() {
         </div>
 
         <Fade>
-          <div style={{ marginTop: 48 }}>
+          <div style={{ marginTop: mob ? 36 : 48 }}>
             <h3 style={{ fontSize: 16, fontWeight: 600, color: TEXT, margin: "0 0 20px" }}>Selected Experience</h3>
             {[
               {
@@ -428,7 +481,7 @@ function Research() {
             ].map((e, i) => (
               <Fade key={i} delay={i * 0.06}>
                 <div style={{ marginBottom: 24, paddingLeft: 16, borderLeft: `2px solid ${BORDER}` }}>
-                  <h4 style={{ fontSize: 14.5, fontWeight: 600, color: TEXT, margin: "0 0 2px" }}>{e.role}</h4>
+                  <h4 style={{ fontSize: mob ? 14 : 14.5, fontWeight: 600, color: TEXT, margin: "0 0 2px" }}>{e.role}</h4>
                   <p style={{ fontSize: 13, color: ACCENT, fontWeight: 500, margin: "0 0 6px" }}>{e.org}</p>
                   <p style={{ fontSize: 14, color: TEXT_SEC, margin: 0, lineHeight: 1.7 }}>{e.detail}</p>
                 </div>
@@ -441,13 +494,58 @@ function Research() {
   );
 }
 
-function Teaching() {
+function News() {
+  const mob = useMobile();
   return (
-    <section id="teaching" style={{ background: BG_SEC }}>
-      <div style={{ maxWidth: 820, margin: "0 auto", padding: "0 24px 60px" }}>
+    <section id="news" style={{ background: BG_SEC }}>
+      <div style={{ maxWidth: 820, margin: "0 auto", padding: mob ? "0 20px 40px" : "0 24px 60px" }}>
+        <SectionHead>News & Updates</SectionHead>
+        <div style={{ position: "relative", paddingLeft: mob ? 28 : 36 }}>
+          {/* Timeline line */}
+          <div style={{
+            position: "absolute", left: mob ? 5 : 7, top: 8, bottom: 8,
+            width: 2, background: BORDER,
+          }} />
+          {NEWS.map((item, i) => (
+            <Fade key={i} delay={i * 0.05}>
+              <div style={{
+                position: "relative", paddingBottom: i < NEWS.length - 1 ? 28 : 0,
+                display: "flex", gap: mob ? 12 : 20, alignItems: "flex-start",
+              }}>
+                {/* Dot */}
+                <div style={{
+                  position: "absolute", left: mob ? -28 : -36,
+                  top: 4, width: 12, height: 12, borderRadius: "50%",
+                  background: item.latest ? ACCENT : BG,
+                  border: `2px solid ${item.latest ? ACCENT : BORDER}`,
+                  flexShrink: 0,
+                }} />
+                {/* Date */}
+                <span style={{
+                  fontSize: 13, fontWeight: 600, color: ACCENT,
+                  minWidth: mob ? 70 : 80, flexShrink: 0, paddingTop: 1,
+                }}>{item.date}</span>
+                {/* Description */}
+                <p style={{
+                  fontSize: mob ? 14 : 15, color: TEXT_SEC, margin: 0, lineHeight: 1.65,
+                }}>{item.text}</p>
+              </div>
+            </Fade>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Teaching() {
+  const mob = useMobile();
+  return (
+    <section id="teaching" style={{ background: BG }}>
+      <div style={{ maxWidth: 820, margin: "0 auto", padding: mob ? "0 20px 40px" : "0 24px 60px" }}>
         <SectionHead>Teaching</SectionHead>
         <Fade>
-          <p style={{ fontSize: 15, color: TEXT_SEC, lineHeight: 1.8, marginBottom: 24, maxWidth: 600 }}>
+          <p style={{ fontSize: mob ? 14 : 15, color: TEXT_SEC, lineHeight: 1.8, marginBottom: 24, maxWidth: 600 }}>
             Graduate Teaching Assistant at Carnegie Mellon University.
           </p>
         </Fade>
@@ -457,23 +555,24 @@ function Teaching() {
         ].map((t, i) => (
           <Fade key={i} delay={i * 0.08}>
             <div style={{
-              display: "flex", justifyContent: "space-between", alignItems: "baseline",
-              padding: "16px 0", borderBottom: `1px solid ${BORDER}`, flexWrap: "wrap", gap: 8,
+              display: "flex", flexDirection: mob ? "column" : "row",
+              justifyContent: "space-between", alignItems: mob ? "flex-start" : "baseline",
+              padding: "16px 0", borderBottom: `1px solid ${BORDER}`, gap: mob ? 2 : 8,
             }}>
-              <span style={{ fontSize: 15, fontWeight: 500, color: TEXT }}>{t.course}</span>
-              <span style={{ fontSize: 13, color: TEXT_TERT }}>{t.period}</span>
+              <span style={{ fontSize: mob ? 14 : 15, fontWeight: 500, color: TEXT }}>{t.course}</span>
+              <span style={{ fontSize: 13, color: TEXT_TERT, flexShrink: 0 }}>{t.period}</span>
             </div>
           </Fade>
         ))}
 
         <Fade>
-          <div style={{ marginTop: 40 }}>
+          <div style={{ marginTop: mob ? 32 : 40 }}>
             <h3 style={{ fontSize: 16, fontWeight: 600, color: TEXT, margin: "0 0 16px" }}>Technical Skills</h3>
             <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
               {["Python", "PyTorch", "LangChain", "LlamaIndex", "JavaScript", "Git", "AWS", "GCP", "SQL", "Flask"].map(s => (
                 <span key={s} style={{
                   padding: "5px 14px", borderRadius: 6, fontSize: 13,
-                  background: "#fff", color: TEXT_SEC, border: `1px solid ${BORDER}`,
+                  background: BG_SEC, color: TEXT_SEC, border: `1px solid ${BORDER}`,
                 }}>{s}</span>
               ))}
             </div>
@@ -485,25 +584,24 @@ function Teaching() {
 }
 
 function Contact() {
+  const mob = useMobile();
   return (
-    <section id="contact" style={{ background: BG }}>
-      <div style={{ maxWidth: 820, margin: "0 auto", padding: "0 24px 80px" }}>
+    <section id="contact" style={{ background: BG_SEC }}>
+      <div style={{ maxWidth: 820, margin: "0 auto", padding: mob ? "0 20px 60px" : "0 24px 80px" }}>
         <SectionHead>Contact</SectionHead>
         <Fade>
           <div style={{ maxWidth: 480 }}>
-            <p style={{ fontSize: 15, color: TEXT_SEC, lineHeight: 1.8, margin: "0 0 24px" }}>
+            <p style={{ fontSize: mob ? 14 : 15, color: TEXT_SEC, lineHeight: 1.8, margin: "0 0 24px" }}>
               I am open to research collaborations, PhD opportunities, and discussions about AI for healthcare. Feel free to reach out.
             </p>
             <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
               {[
                 {
-                  // Gmail: Using the Official 2020 Logo from Wikimedia
                   icon: <img src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg" alt="Gmail" style={{ width: 18, height: 18, verticalAlign: 'middle' }} />,
                   label: "aissah@andrew.cmu.edu",
                   href: "mailto:aissah@andrew.cmu.edu"
                 },
                 {
-                  // LinkedIn: The Official "In" Blue Box Logo
                   icon: (
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18">
                       <path fill="#0077B5" d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
@@ -513,13 +611,11 @@ function Contact() {
                   href: "https://linkedin.com/in/ahmed-tahiru-issah-18b8671a2"
                 },
                 {
-                  // Google Scholar Icon (Official Blue)
                   icon: <img src="https://cdn.simpleicons.org/googlescholar" alt="" style={{ width: 18, height: 18, verticalAlign: 'middle' }} />,
                   label: "Google Scholar",
                   href: "https://scholar.google.com/citations?user=E2zJqAoAAAAJ"
                 },
                 {
-                  // GitHub: The Official Icon from Wikimedia
                   icon: <img src="https://upload.wikimedia.org/wikipedia/commons/c/c2/GitHub_Invertocat_Logo.svg" alt="GitHub" style={{ width: 18, height: 18, verticalAlign: 'middle' }} />,
                   label: "GitHub",
                   href: "https://github.com/ahmedinhotahiru"
@@ -527,12 +623,12 @@ function Contact() {
               ].map((c, i) => (
                 <a key={i} href={c.href} target={c.href.startsWith("mailto") ? undefined : "_blank"} rel="noreferrer" style={{
                   display: "flex", alignItems: "center", gap: 12, textDecoration: "none",
-                  fontSize: 14.5, color: ACCENT, fontWeight: 500, transition: "opacity 0.2s",
+                  fontSize: mob ? 13.5 : 14.5, color: ACCENT, fontWeight: 500, transition: "opacity 0.2s",
                 }}
                   onMouseEnter={e => e.currentTarget.style.opacity = 0.7}
                   onMouseLeave={e => e.currentTarget.style.opacity = 1}
                 >
-                  <span style={{ fontSize: 16 }}>{c.icon}</span>
+                  <span style={{ fontSize: 16, flexShrink: 0, display: "flex", alignItems: "center" }}>{c.icon}</span>
                   {c.label}
                 </a>
               ))}
@@ -547,7 +643,7 @@ function Contact() {
 function Footer() {
   return (
     <footer style={{
-      padding: "24px", textAlign: "center",
+      padding: "24px 20px", textAlign: "center",
       borderTop: `1px solid ${BORDER}`, background: BG_SEC,
     }}>
       <p style={{ margin: 0, fontSize: 13, color: TEXT_TERT }}>
@@ -597,6 +693,7 @@ export default function App() {
       <About />
       <Publications />
       <Research />
+      <News />
       <Teaching />
       <Contact />
       <Footer />
