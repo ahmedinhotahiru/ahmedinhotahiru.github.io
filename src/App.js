@@ -16,7 +16,7 @@ const PUBS = [
     status: "accepted",
     authors: ["A. T. Issah", "I. Seidu", "C. Mukamakuza"],
     title: "Detection versus Instance Segmentation for Multi-Species Malaria Diagnosis: A Head-to-Head Comparison and Multi-Dataset Validation of YOLOv12 Architectures with Small Object Optimization",
-    venue: "MIDL 2026 - Validation Papers",
+    venue: "Medical Imaging with Deep Learning (MIDL) 2026",
     location: "Taipei, Taiwan",
     date: "2026",
     links: [
@@ -27,7 +27,7 @@ const PUBS = [
     status: "accepted",
     authors: ["A. T. Issah", "C. Mukamakuza"],
     title: "Bridging the Gap in Malaria Diagnostics: An Attention-Centric YOLO Framework with Species-Specific Augmentation for Tiny Parasite Detection in Low-Resource Settings",
-    venue: "AIMedHealth Bridge, AAAI 2026",
+    venue: "AIMedHealth Bridge, The 40th Annual AAAI Conference on Artificial Intelligence, AAAI 2026",
     location: "Singapore",
     date: "2026",
     links: [
@@ -90,8 +90,8 @@ const PUBS = [
 ];
 
 const NEWS = [
-  { date: "Mar 2026", text: "Paper accepted at MIDL 2026, Validation Studies Track.", latest: true },
-  { date: "Jan 2026", text: "Paper accepted and presented at AIMedHealth Bridge, AAAI 2026 in Singapore." },
+  { date: "Feb 2026", text: "Paper accepted at MIDL 2026 Conference, Validation Studies Track.", latest: true },
+  { date: "Jan 2026", text: "Paper accepted at AIMedHealth Bridge Workshop, AAAI 2026 in Singapore."},
   { date: "Dec 2025", text: "Paper accepted and presented at IEEE AFRICON 2025 in Polokwane, South Africa." },
   { date: "Sep 2025", text: "Presented co-first-authored paper at MIRASOL Workshop, MICCAI 2025 in Daejeon, South Korea." },
   { date: "May 2025", text: "Completed M.S. in Engineering Artificial Intelligence at Carnegie Mellon University." },
@@ -256,7 +256,21 @@ function Hero() {
             margin: "0 0 8px", lineHeight: 1.2,
           }}>Ahmed Tahiru Issah</h1>
           <p style={{ fontSize: mob ? 14.5 : 16, color: TEXT_SEC, margin: "0 0 6px", lineHeight: 1.5 }}>
-            Research Associate, AI Healthcare Research Laboratory
+            Research Associate,{" "}
+            <a href="https://www.africa.engineering.cmu.edu/research/ai-healthcare.html" target="_blank" rel="noreferrer" style={{
+              color: TEXT_SEC, textDecoration: "none", borderBottom: `1px solid ${BORDER}`,
+              transition: "color 0.2s, border-color 0.2s",
+            }}
+              onMouseEnter={e => { e.currentTarget.style.color = ACCENT; e.currentTarget.style.borderColor = ACCENT; }}
+              onMouseLeave={e => { e.currentTarget.style.color = TEXT_SEC; e.currentTarget.style.borderColor = BORDER; }}
+            >
+              AI Healthcare Research Laboratory
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginLeft: 3, verticalAlign: "middle", marginTop: -2 }}>
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                <polyline points="15 3 21 3 21 9" />
+                <line x1="10" y1="14" x2="21" y2="3" />
+              </svg>
+            </a>
           </p>
           <p style={{ fontSize: mob ? 14 : 15, color: TEXT_TERT, margin: "0 0 20px" }}>
             Carnegie Mellon University
@@ -470,7 +484,7 @@ function Research() {
           ))}
         </div>
 
-        <Fade>
+        {/* <Fade>
           <div style={{ marginTop: mob ? 36 : 48 }}>
             <h3 style={{ fontSize: 16, fontWeight: 600, color: TEXT, margin: "0 0 20px" }}>Selected Experience</h3>
             {[
@@ -486,7 +500,7 @@ function Research() {
               },
               {
                 role: "Lead Researcher \u2014 KG-Driven Crop Advisory Platform",
-                org: "Carnegie Mellon University",
+                org: "Carnegie Mellon University & KCRC",
                 detail: "Architecting a multi-agent advisory system combining iterative KG refinement with GraphRAG for smallholder farmers in Rwanda.",
               },
             ].map((e, i) => (
@@ -499,7 +513,7 @@ function Research() {
               </Fade>
             ))}
           </div>
-        </Fade>
+        </Fade> */}
       </div>
     </section>
   );
@@ -580,7 +594,7 @@ function Teaching() {
           <div style={{ marginTop: mob ? 32 : 40 }}>
             <h3 style={{ fontSize: 16, fontWeight: 600, color: TEXT, margin: "0 0 16px" }}>Technical Skills</h3>
             <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-              {["Python", "PyTorch", "LangChain", "LlamaIndex", "JavaScript", "Git", "AWS", "GCP", "SQL", "Flask"].map(s => (
+              {["Python", "PyTorch", "LangChain", "LlamaIndex", "JavaScript", "Git", "AWS", "GCP", "SQL"].map(s => (
                 <span key={s} style={{
                   padding: "5px 14px", borderRadius: 6, fontSize: 13,
                   background: BG_SEC, color: TEXT_SEC, border: `1px solid ${BORDER}`,
