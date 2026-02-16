@@ -14,13 +14,24 @@ const SECTIONS = ["About", "Publications", "Research", "News", "Teaching", "Cont
 const PUBS = [
   {
     status: "accepted",
-    authors: ["A. T. Issah", "C. P. Mukamakuza"],
+    authors: ["A. T. Issah", "I. Seidu", "C. Mukamakuza"],
+    title: "Detection versus Instance Segmentation for Multi-Species Malaria Diagnosis: A Head-to-Head Comparison and Multi-Dataset Validation of YOLOv12 Architectures with Small Object Optimization",
+    venue: "MIDL 2026 - Validation Papers",
+    location: "Taipei, Taiwan",
+    date: "2026",
+    links: [
+      { label: "Paper", href: "https://openreview.net/forum?id=C7KAM2t531", icon: "\u{1F4C4}" },
+    ],
+  },
+  {
+    status: "accepted",
+    authors: ["A. T. Issah", "C. Mukamakuza"],
     title: "Bridging the Gap in Malaria Diagnostics: An Attention-Centric YOLO Framework with Species-Specific Augmentation for Tiny Parasite Detection in Low-Resource Settings",
     venue: "AIMedHealth Bridge, AAAI 2026",
     location: "Singapore",
     date: "2026",
     links: [
-      { label: "Paper", href: "https://openreview.net/forum?id=miC6JHIQPg", icon: "\u{1F4C4}" },
+      { label: "Paper", href: "#", icon: "\u{1F4C4}" },
       // { label: "arXiv", href: "#", icon: <img src="https://cdn.simpleicons.org/arxiv" alt="" style={{ width: 14, height: 14 }} /> },
       // { label: "Code", href: "#", icon: "\u{1F4BB}" },
       // { label: "Slides", href: "#", icon: "\u{1F4CA}" },
@@ -317,7 +328,7 @@ function About() {
 
 function StatusBadge({ status }) {
   const cfg = {
-    accepted: { label: "Published", bg: "#dcfce7", color: "#166534" },
+    accepted: { label: "Accepted / Published", bg: "#dcfce7", color: "#166534" },
     review: { label: "Under Review", bg: "#fef3c7", color: "#92400e" },
     prep: { label: "In Preparation", bg: "#f1f5f9", color: "#475569" },
   };
@@ -475,7 +486,7 @@ function Research() {
               },
               {
                 role: "Lead Researcher \u2014 KG-Driven Crop Advisory Platform",
-                org: "Carnegie Mellon University & KCRC",
+                org: "Carnegie Mellon University",
                 detail: "Architecting a multi-agent advisory system combining iterative KG refinement with GraphRAG for smallholder farmers in Rwanda.",
               },
             ].map((e, i) => (
