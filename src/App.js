@@ -90,7 +90,7 @@ const PUBS = [
 ];
 
 const NEWS = [
-  { date: "Feb 2026", text: "Paper accepted at MIDL 2026 Conference, Validation Studies Track.", latest: true },
+  { date: "Feb 2026", text: "Paper accepted at MIDL 2026 Conference.", latest: true },
   { date: "Jan 2026", text: "Paper accepted at AIMedHealth Bridge Workshop, AAAI 2026 in Singapore."},
   { date: "Dec 2025", text: "Paper accepted and presented at IEEE AFRICON 2025 in Polokwane, South Africa." },
   { date: "Sep 2025", text: "Presented co-first-authored paper at MIRASOL Workshop, MICCAI 2025 in Daejeon, South Korea." },
