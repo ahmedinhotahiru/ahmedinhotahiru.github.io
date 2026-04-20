@@ -31,7 +31,7 @@ const PUBS = [
     location: "Singapore",
     date: "2026",
     links: [
-      { label: "Paper", href: "#", icon: "\u{1F4C4}" },
+      { label: "Paper", href: "https://proceedings.mlr.press/v317/issah26a.html", icon: "\u{1F4C4}" },
       // { label: "arXiv", href: "#", icon: <img src="https://cdn.simpleicons.org/arxiv" alt="" style={{ width: 14, height: 14 }} /> },
       // { label: "Code", href: "#", icon: "\u{1F4BB}" },
       // { label: "Slides", href: "#", icon: "\u{1F4CA}" },
