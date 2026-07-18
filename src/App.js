@@ -18,13 +18,22 @@ const SECTIONS = ["About", "News", "Publications", "Research", "Teaching", "Cont
 const PUBS = [
   {
     status: "accepted",
+    authors: ["A. T. Issah", "C. B. Delahunt", "C. Mukamakuza"],
+    title: "SGMCE: Segment-Grounded Morphological Concept Explanation for Malaria Parasite Species Identification in Thick Blood Smears",
+    venue: "Medical Image Understanding and Analysis (MIUA)",
+    location: "Dublin, Ireland",
+    date: "2026",
+    links: [],
+  },
+  {
+    status: "accepted",
     authors: ["A. T. Issah", "I. Seidu", "C. Mukamakuza"],
     title: "Detection versus Instance Segmentation for Multi-Species Malaria Diagnosis: A Head-to-Head Comparison and Multi-Dataset Validation of YOLOv12 Architectures with Small Object Optimization",
     venue: "Medical Imaging with Deep Learning (MIDL)",
     location: "Taipei, Taiwan",
     date: "2026",
     links: [
-      { label: "Paper", href: "https://openreview.net/forum?id=C7KAM2t531", type: "paper" },
+      { label: "Paper", href: "https://proceedings.mlr.press/v315/issah26a.html", type: "paper" },
     ],
   },
   {
@@ -45,7 +54,9 @@ const PUBS = [
     venue: "IEEE AFRICON",
     location: "Polokwane, South Africa",
     date: "2025",
-    links: [],
+    links: [
+      { label: "Paper", href: "https://ieeexplore.ieee.org/document/11533830", type: "paper" },
+    ],
   },
   {
     status: "accepted",
@@ -55,13 +66,18 @@ const PUBS = [
     location: "Daejeon, South Korea",
     date: "2025",
     links: [
+      { label: "Paper", href: "https://link.springer.com/chapter/10.1007/978-3-032-13654-1_22", type: "paper" },
       { label: "arXiv", href: "https://arxiv.org/abs/2601.16967", type: "arxiv" },
     ],
   },
 ];
 
 const NEWS = [
-  { date: "Feb 2026", text: "Paper accepted at MIDL 2026 Conference.", latest: true },
+  { date: "Jun 2026", text: "Paper accepted for oral presentation at MIUA 2026 Conference in Dublin, Ireland.", latest: true },
+  { date: "Jun 2026", text: "Awarded a travel grant to attend the MIUA 2026 Conference in Dublin, Ireland." },
+  { date: "Jun 2026", text: "Paper accepted at Medical Image Understanding and Analysis (MIUA) 2026 Conference in Dublin, Ireland." },
+  { date: "Jun 2026", text: "Joined Zipline International Inc. as a Machine Learning Engineer on the Perception team, working on droid autonomy." },
+  { date: "Feb 2026", text: "Paper accepted at MIDL 2026 Conference." },
   { date: "Jan 2026", text: "Paper accepted at AIMedHealth Bridge Workshop, AAAI 2026 in Singapore." },
   { date: "Dec 2025", text: "Paper accepted and presented at IEEE AFRICON 2025 in Polokwane, South Africa." },
   { date: "Sep 2025", text: "Presented co-first-authored paper at MIRASOL Workshop, MICCAI 2025 in Daejeon, South Korea." },
@@ -121,7 +137,7 @@ const IconArxiv = <img src="https://cdn.simpleicons.org/arxiv" alt="" style={{ w
 const IconPaper = "\u{1F4C4}";
 
 const SOCIALS = [
-  { key: "email", label: "aissah@andrew.cmu.edu", href: "mailto:aissah@andrew.cmu.edu", icon: IconEmail },
+  { key: "email", label: "aissah@alumni.cmu.edu", href: "mailto:aissah@alumni.cmu.edu", icon: IconEmail },
   { key: "scholar", label: "Google Scholar", href: "https://scholar.google.com/citations?user=E2zJqAoAAAAJ", icon: IconScholar },
   { key: "linkedin", label: "LinkedIn", href: "https://linkedin.com/in/ahmed-tahiru-issah-18b8671a2", icon: IconLinkedIn },
   { key: "github", label: "GitHub", href: "https://github.com/ahmedinhotahiru", icon: IconGitHub },
@@ -200,20 +216,20 @@ function Sidebar({ active, narrow }) {
           letterSpacing: "-0.4px", lineHeight: 1.2, margin: "0 0 4px",
         }}>Ahmed Tahiru Issah</h1>
         <p style={{ fontSize: 13.5, color: TEXT_SEC, margin: "0 0 2px", lineHeight: 1.5 }}>
-          Research Associate
+          Machine Learning Engineer
         </p>
         <p style={{ fontSize: 13, color: TEXT_TERT, margin: "0 0 4px", lineHeight: 1.5 }}>
-          <a href="https://www.africa.engineering.cmu.edu/research/ai-healthcare.html"
+          <a href="https://www.flyzipline.com"
             target="_blank" rel="noreferrer"
             style={{ color: TEXT_TERT, textDecoration: "none", borderBottom: `1px dotted ${BORDER}`, transition: "color 0.2s, border-color 0.2s" }}
             onMouseEnter={e => { e.currentTarget.style.color = ACCENT; e.currentTarget.style.borderBottomColor = ACCENT; }}
             onMouseLeave={e => { e.currentTarget.style.color = TEXT_TERT; e.currentTarget.style.borderBottomColor = BORDER; }}
           >
-            AI Healthcare Research Lab{IconExternal}
+            Zipline International Inc.{IconExternal}
           </a>
         </p>
         <p style={{ fontSize: 13, color: TEXT_TERT, margin: "0 0 24px" }}>
-          Carnegie Mellon University
+          Perception · Droid Autonomy
         </p>
       </div>
 
@@ -303,7 +319,7 @@ function About() {
       <Fade>
         <div style={{ fontSize: 14.5, color: TEXT_SEC, lineHeight: 1.8 }}>
           <p style={{ margin: "0 0 16px" }}>
-            I am a Research Associate in the AI Healthcare Research Laboratory at Carnegie Mellon University Africa, where I completed my M.S. in Engineering Artificial Intelligence (CQPA 3.64 / 4.00) in May 2025. I hold a B.S. in Computer Science from the University for Development Studies (CGPA 4.43 / 5.00).
+            I am a Machine Learning Engineer on the Perception team at Zipline International Inc., where I work on droid autonomy. Previously, I was a Research Associate in the AI Healthcare Research Laboratory at Carnegie Mellon University Africa, where I completed my M.S. in Engineering Artificial Intelligence (CQPA 3.64 / 4.00) in May 2025. I hold a B.S. in Computer Science from the University for Development Studies (CGPA 4.43 / 5.00).
           </p>
           <p style={{ margin: "0 0 16px" }}>
             My work lies at the intersection of <span style={{ color: TEXT, fontWeight: 600 }}>artificial intelligence and healthcare</span>, with a focus on medical imaging. I develop computer vision and deep learning methods for complex, high-dimensional medical data — building robust, interpretable diagnostic tools.
@@ -464,7 +480,7 @@ function Research() {
 
 function Teaching() {
   const courses = [
-    { course: "Introduction to Deep Learning (11-785)", period: "Jan 2025 – Present" },
+    { course: "Introduction to Deep Learning (11-785)", period: "Jan 2025 – May 2026" },
     { course: "Data Inference & Applied Machine Learning", period: "Sep – Dec 2024" },
   ];
   return (
